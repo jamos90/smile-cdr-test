@@ -14,12 +14,39 @@ export class PatientTableComponent implements OnInit {
 
   searchName: string = '';
 
+  buttonActive: boolean = true;
+
+  errorText:  string = '';
+
+  checkTextInput(text: string) {
+    console.log(text.length);
+    for(let i = 0; i < text.length; i ++ ) {
+      let code = text.charCodeAt(i);
+      if(!(code > 64 && code < 91) &&
+        !(code > 96 && code < 123)) {
+          this.errorText = 'Text input cannot contain non-alphabetic characters'
+          return false;
+      }
+    }
+    this.errorText = "";
+    return true;
+  }
+
   searchResources() {
-    console.log('getting to search recources function');
+    this.buttonActive = false;
     console.log(this.searchName);
-    this.apiService.searchPatients(this.searchName).subscribe((data) => {
-      this.patientsData = data;
-    })
+    const textIsValid = this.checkTextInput(this.searchName);
+    console.log(textIsValid);
+    if(textIsValid) {
+      this.apiService.searchPatients(this.searchName).subscribe((data) => {
+        this.patientsData = data;
+        this.buttonActive = true;
+      })
+    }
+    else {
+      console.log('non valid input');
+      this.buttonActive = true;
+    }
   }
 
   sortData(): void {

@@ -2,7 +2,8 @@
 <div *ngIf="patientsData.entry">
   <div class="search-container">
       <input type="text" [(ngModel)]='searchName'>
-      <button (click)="searchResources()">Search</button>
+      <button [disabled]="!buttonActive" (click)="searchResources()">Search</button>
+      <p *ngIf="errorText.length">{{errorText}}</p>
   </div>
   <table>
     <tr>
