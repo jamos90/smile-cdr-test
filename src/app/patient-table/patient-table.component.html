@@ -1,16 +1,24 @@
 <p>Patients component working</p>
 <div *ngIf="patientsData.entry">
+  <div class="search-container">
+      <input type="text" [(ngModel)]='searchName'>
+      <button (click)="searchResources()">Search</button>
+  </div>
   <table>
     <tr>
-      <th>Patient family name</th>
-      <th>Patient given name</th>
+      <th>Family name</th>
+      <th>Given name</th>
       <th>Patient Id</th>
-      <th> Patient date of birth</th>
+      <th>Date of birth</th>
+      <th>Gender</th>
+      <th></th>
     </tr>
     <tr *ngFor="let data of patientsData.entry">
-      <td>{{data.resource.name[0].family}}</td>
+      <td>{{data.resource.name[0].family ? data.resource.name[0].family : 'no family name given'}}</td>
       <td>{{data.resource.name[0].given[0]}}</td>
       <td>{{data.resource.id}}</td>
+      <td>{{data.resource.birthDate ? data.resource.birthDate : 'no dob listed'}}</td>
+      <td>{{data.resource.gender ? data.resource.gender : 'no gender listed'}}</td>
     </tr>
   </table>
   <!-- <table>
