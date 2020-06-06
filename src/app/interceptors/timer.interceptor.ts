@@ -7,6 +7,7 @@ import {
   HttpEvent,
   HttpErrorResponse
 } from '@angular/common/http';
+import { MessageService } from '../services/message.service';
 
 import { Observable } from 'rxjs';
 import {  tap, finalize } from 'rxjs/operators';
@@ -14,7 +15,7 @@ import {  tap, finalize } from 'rxjs/operators';
 
 @Injectable()
 export class TimerInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private messageService:  MessageService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -34,7 +35,8 @@ export class TimerInterceptor implements HttpInterceptor {
       ),
       finalize(() => {
         const timeElapsed = Date.now() - started;
-        console.log(timeElapsed);
+        console.log(typeof(timeElapsed));
+        this.messageService.changeMessage(timeElapsed);
       })
     )
   } 
