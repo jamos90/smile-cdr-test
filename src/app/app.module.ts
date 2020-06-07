@@ -10,12 +10,14 @@ import { TimerInterceptor } from './interceptors/timer.interceptor';
 import { PatientTableComponent } from './patient-table/patient-table.component';
 import { httpInterceptorProviders } from './interceptors';
 import { MessagesComponent } from './messages/messages.component';
+import { ErrorTextComponent } from './error-text/error-text.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientTableComponent,
-    MessagesComponent
+    MessagesComponent,
+    ErrorTextComponent
   ],
   imports: [
     BrowserModule,
