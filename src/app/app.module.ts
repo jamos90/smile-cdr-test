@@ -11,13 +11,15 @@ import { PatientTableComponent } from './patient-table/patient-table.component';
 import { httpInterceptorProviders } from './interceptors';
 import { MessagesComponent } from './messages/messages.component';
 import { ErrorTextComponent } from './error-text/error-text.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientTableComponent,
     MessagesComponent,
-    ErrorTextComponent
+    ErrorTextComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,

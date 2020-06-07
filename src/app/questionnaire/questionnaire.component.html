@@ -1,0 +1,15 @@
+<div *ngIf="data">
+  <p>questionnaire works! {{data.id}}</p>
+  <form>
+    <div *ngFor="let question of data.item">
+      <label>{{question.text}}</label>
+      <div *ngIf="question.type === 'group'">
+        <div *ngFor='let item of question.item'>
+          <label>{{item.text}}</label>
+          <input [type]="item.type === 'boolean' ? 'checkbox' : 'question.type'" />
+        </div>
+      </div>
+      <input *ngIf="question.type !== 'group'" [type]="question.type === 'boolean' ? 'checkbox' : 'question.type'" />
+    </div>
+  </form>    
+</div>
