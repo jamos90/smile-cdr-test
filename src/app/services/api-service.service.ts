@@ -16,15 +16,15 @@ export class ApiService {
       { headers: this.getHeaders() });
   }
 
-  searchPatients(name: string) {
-    return this.httpClient.get(environment.queryURI + `/Patient/?name=${name}`,
+  searchPatients(name: string, date: string) {
+    return this.httpClient.get(environment.queryURI + `/Patient/?name=${name}&birthdate=${date}`,
     {headers: this.getHeaders() });
   }
 
-  // getPatientsSpecificDates () {
-  //   let params = new HttpParams().set
-    // return this.httpClient.get('test');
-  // }
+  getPatientsWithSpecificBirthdates (date1, date2) {
+    return this.httpClient.get(environment.queryURI + `/Patient/?birthdate=ge${date1}&birthdate=le${date2}&_sort=birthdate`,
+    {headers: this.getHeaders() });
+  }
 
   private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders({
