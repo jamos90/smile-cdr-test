@@ -1,0 +1,21 @@
+.body-content {
+  max-width: 100%;
+  display: flex;
+  padding: 3%;
+  width: 100%;
+  flex-direction: column;
+
+  .questionnaire {
+    width: 100%;
+  }
+}
+.footer-content {
+  height: 30%;
+  padding: 3%;
+}
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}

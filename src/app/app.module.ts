@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -12,6 +12,7 @@ import { httpInterceptorProviders } from './interceptors';
 import { MessagesComponent } from './messages/messages.component';
 import { ErrorTextComponent } from './error-text/error-text.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
     BrowserModule,
     HttpClientModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [
     ApiService,
