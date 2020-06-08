@@ -1,49 +1,50 @@
-<p>Patients component working</p>
-<div *ngIf="patientsData.entry">
-  <div class="search-container">
-      <input type="text" [(ngModel)]='searchName'>
+<div class="pt-body-container">
+  <h3 class="pt-title-text">Patient data table</h3>
+  <div class="pt-search-container">
+    <div class="pt-search-item">
+        <label>Search for a patient by name:</label>
+        <input type="text" placeholder="search for a resource by name" type="text" [(ngModel)]='searchName'>
+    </div>
+    <div class="pt-search-item">
+        <label>Search for a patient by date of birth:</label>
+        <input type="date" [(ngModel)]="searchDate">
+    </div>
       <button [disabled]="!buttonActive" (click)="searchResources()">Search</button>
-      <p *ngIf="errorText.length">{{errorText}}</p>
+      <button [disabled]="!buttonActive" (click)="getData()">Get all results</button>
   </div>
-  <table>
-    <tr>
-      <th>Family name</th>
-      <th>Given name</th>
-      <th>Patient Id</th>
-      <th>Date of birth</th>
-      <th>Gender</th>
-      <th></th>
-    </tr>
-    <tr *ngFor="let data of patientsData.entry">
-      <td>{{data.resource.name[0].family ? data.resource.name[0].family : 'no family name given'}}</td>
-      <td>{{data.resource.name[0].given[0]}}</td>
-      <td>{{data.resource.id}}</td>
-      <td>{{data.resource.birthDate ? data.resource.birthDate : 'no dob listed'}}</td>
-      <td>{{data.resource.gender ? data.resource.gender : 'no gender listed'}}</td>
-    </tr>
-  </table>
-  <!-- <table>
+  <app-error-text></app-error-text>
+  <div *ngIf="patientsData.entry">
+    <table>
       <tr>
-        <th>First Name:</th>
-        <td id='fname'></td>
+        <th>Family name</th>
+        <th>Given name 1</th>
+        <th>Given name 2</th>
+        <th>Active</th>
+        <th>Deceased</th>
+        <th>Patient Id</th>
+        <th>Date of birth</th>
+        <th>Gender</th>
+        <th>Contact method</th>
+        <th>Contact option</th>
+        <th>Address</th>
       </tr>
-      <tr>
-        <th>Last Name:</th>
-        <td id='lname'></td>
+      <tr *ngFor="let data of patientsData.entry">
+        <td>{{data.resource.name[0].family ? (data.resource.name[0].family | titlecase) : 'no family name given' | titlecase}}</td>
+        <td>{{data.resource.name[0].given[0] ? (data.resource.name[0].given[0] | titlecase) : 'no given name provided'}}</td>
+        <td>{{data.resource.name[0].given[1] ? (data.resource.name[0].given[1] | titlecase) : 'only one given name provided'}}</td>
+        <td>{{data.resource.active ? data.resource.active : 'no data present'}}</td>
+        <td>{{data.resource.deceasedBoolean ? data.resource.deceasedBoolean : 'no data present'}}</td>
+        <td>{{data.resource.id ? data.resource.id : 'no id present'}}</td>
+        <td>{{data.resource.birthDate | date: 'yyyy-MM-dd'}}</td>
+        <td>{{data.resource.gender ? data.resource.gender : 'no gender listed'}}</td>
+        <td>{{data.resource.telecom ? data.resource.telecom[0].system : 'no contact device'}}</td>
+        <td>{{data.resource.telecom ? data.resource.telecom[0].use : 'no contact method'}}</td>
+        <td>{{data.resource.address ? data.resource.address[1] : 'no address listed'}} </td>
       </tr>
-      <tr>
-        <th>Gender:</th>
-        <td id='gender'></td>
-      </tr>
-      <tr>
-        <th>Date of Birth:</th>
-        <td id='birthdate'></td>
-      </tr>
-      <tr>
-        <th>Age:</th>
-        <td id='age'></td>
-      </tr>
-    </table> -->
-  <!-- <p *ngFor="let data of patientsData.entry">{{data.resource.id}}</p> -->
+    </table>
+  </div>
+</div>
+<div class="pt-footer-container">
+    <app-messages></app-messages>
 </div>
 

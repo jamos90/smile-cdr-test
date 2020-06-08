@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api-service.service';
+import { ErrorTextService } from '../services/error-text.service';
 
 @Component({
   selector: 'app-patient-table',
@@ -8,15 +9,15 @@ import { ApiService } from '../services/api-service.service';
 })
 export class PatientTableComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private errorText: ErrorTextService) { }
 
   patientsData: any = {};
 
   searchName: string = '';
 
-  buttonActive: boolean = true;
+  searchDate: any;
 
-  errorText:  string = '';
+  buttonActive: boolean = true;
 
   checkTextInput(text: string) {
     console.log(text.length);
@@ -24,47 +25,56 @@ export class PatientTableComponent implements OnInit {
       let code = text.charCodeAt(i);
       if(!(code > 64 && code < 91) &&
         !(code > 96 && code < 123)) {
-          this.errorText = 'Text input cannot contain non-alphabetic characters'
+          this.errorText.setErrorText('Text input cannot contain non-alphabetic characters');
           return false;
       }
     }
-    this.errorText = "";
+    this.errorText.clear()
+    return true;
+  }
+
+  checkDateInput(date: any) {
+    const splitDate = date.split('-');
+    if(splitDate[0].length > 4) {
+      this.errorText.setErrorText('Date has to be valid')
+      return false;
+    }
+    this.errorText.clear()
     return true;
   }
 
   searchResources() {
+    if(this.searchDate === '' || this.searchName === '') {
+      this.errorText.setErrorText('Search criteria must not be empty');
+      this.buttonActive = true;
+      return;
+    }
     this.buttonActive = false;
-    console.log(this.searchName);
+    this.checkDateInput(this.searchDate)
     const textIsValid = this.checkTextInput(this.searchName);
-    console.log(textIsValid);
     if(textIsValid) {
-      this.apiService.searchPatients(this.searchName).subscribe((data) => {
+      this.apiService.searchPatients(this.searchName, this.searchDate).subscribe((data) => {
         this.patientsData = data;
         this.buttonActive = true;
       })
     }
     else {
-      console.log('non valid input');
+      console.log('invalid input');
       this.buttonActive = true;
     }
   }
 
-  sortData(): void {
-    console.log('sorting data??', this.patientsData);
-    const sortedPatientData = this.patientsData.entry.sort((a,b)=> {
-      return a.resource.birthdate - b.resource.birthdate
-    })
 
-    this.patientsData = sortedPatientData;
-  }
-
-
-  getData(): void {
-    this.apiService.getPatients()
+  getData(): void{
+    this.errorText.clear();
+    this.buttonActive = false;
+    this.apiService.getPatientsWithSpecificBirthdates('1960-01-01','1964-12-31')
     .subscribe((data) => {
       this.patientsData = data;
       // this.sortData();
       console.log(data);
+      console.log(new Date('1961-03-22'))
+      this.buttonActive = true;
     })
   }
 
