@@ -11,7 +11,6 @@ export class AppComponent implements OnInit {
   title = 'fhir-app-test';
 
   constructor(
-    private apiService: ApiService
   ) { }
 
   patientData: Object = {};
