@@ -1,5 +1,7 @@
 <div class="pt-body-container">
-  <h3 class="pt-title-text">Patient data table</h3>
+  <div class='pt-header-container'>
+    <h3 class="pt-title-text">Patient data table</h3>
+  </div>
   <div class="pt-search-container">
     <div class="pt-search-item">
         <label>Search for a patient by name:</label>
@@ -26,7 +28,8 @@
         <th>Gender</th>
         <th>Contact method</th>
         <th>Contact option</th>
-        <th>Address</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
       </tr>
       <tr *ngFor="let data of patientsData.entry">
         <td>{{data.resource.name[0].family ? (data.resource.name[0].family | titlecase) : 'no family name given' | titlecase}}</td>
@@ -39,7 +42,8 @@
         <td>{{data.resource.gender ? data.resource.gender : 'no gender listed'}}</td>
         <td>{{data.resource.telecom ? data.resource.telecom[0].system : 'no contact device'}}</td>
         <td>{{data.resource.telecom ? data.resource.telecom[0].use : 'no contact method'}}</td>
-        <td>{{data.resource.address ? data.resource.address[1] : 'no address listed'}} </td>
+        <td>{{data.resource.address ? (data.resource.address[0].text ? data.resource.address[0].text : 'no address details') : 'no address listed'}} </td>
+        <td>{{data.resource.address ? (data.resource.address[1] ? data.resource.address[1].text : 'no address details') : 'no address listed'}} </td>
       </tr>
     </table>
   </div>

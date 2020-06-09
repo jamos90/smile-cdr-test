@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api-service.service';
 import { ErrorTextService } from '../services/error-text.service';
+import  textValidators  from '../../utils/helpers/textValidationHelpers';
 
 @Component({
   selector: 'app-patient-table',
@@ -19,18 +20,12 @@ export class PatientTableComponent implements OnInit {
 
   buttonActive: boolean = true;
 
-  checkTextInput(text: string) {
-    console.log(text.length);
-    for(let i = 0; i < text.length; i ++ ) {
-      let code = text.charCodeAt(i);
-      if(!(code > 64 && code < 91) &&
-        !(code > 96 && code < 123)) {
-          this.errorText.setErrorText('Text input cannot contain non-alphabetic characters');
-          return false;
-      }
+  checkTextInput(text: string) { 
+    const textIsValid = textValidators.allLanguageTextValidator(text.trim());
+    if(!textIsValid) {
+      this.errorText.setErrorText('Text input cannot contain non-alphabetic characters');
     }
-    this.errorText.clear()
-    return true;
+    return textIsValid;
   }
 
   checkDateInput(date: any) {
@@ -44,26 +39,24 @@ export class PatientTableComponent implements OnInit {
   }
 
   searchResources() {
-    if(this.searchDate === '' || this.searchName === '') {
+    this.buttonActive = false;
+    if(!this.searchDate || this.searchName.length === 0) {
       this.errorText.setErrorText('Search criteria must not be empty');
       this.buttonActive = true;
       return;
     }
-    this.buttonActive = false;
-    this.checkDateInput(this.searchDate)
+    const dateIsValid = this.checkDateInput(this.searchDate)
     const textIsValid = this.checkTextInput(this.searchName);
-    if(textIsValid) {
-      this.apiService.searchPatients(this.searchName, this.searchDate).subscribe((data) => {
+    if(textIsValid && dateIsValid ) {
+      this.apiService.searchPatients(this.searchName.trim(), this.searchDate).subscribe((data) => {
         this.patientsData = data;
         this.buttonActive = true;
       })
     }
     else {
-      console.log('invalid input');
       this.buttonActive = true;
     }
   }
-
 
   getData(): void{
     this.errorText.clear();
@@ -71,9 +64,6 @@ export class PatientTableComponent implements OnInit {
     this.apiService.getPatientsWithSpecificBirthdates('1960-01-01','1964-12-31')
     .subscribe((data) => {
       this.patientsData = data;
-      // this.sortData();
-      console.log(data);
-      console.log(new Date('1961-03-22'))
       this.buttonActive = true;
     })
   }
@@ -81,6 +71,4 @@ export class PatientTableComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
-
-
 }

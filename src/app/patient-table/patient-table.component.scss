@@ -6,12 +6,19 @@
   align-items: center;
   justify-content: center;
 
-  .pt-title-text {
-    text-align: center;
-    font-size: 1.5rem;
-    text-decoration: underline;
-  
+  .pt-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .pt-title-text {
+      text-align: center;
+      font-size: 1.5rem;
+      text-decoration: underline;
+    
+    }
   }
+
   .pt-search-container {
     display: flex;
     flex-direction: row;
@@ -33,18 +40,18 @@
   
     td {
       text-align: center;
-  
-      tr:hover {
-        color: red;
-      }
+
     }
   
   }
-  
-  .pt-footer-container {
-    height: 20%;
+}
 
-  }
+.pt-footer-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
 }
 
