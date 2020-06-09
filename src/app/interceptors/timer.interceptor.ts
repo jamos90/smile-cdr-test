@@ -35,7 +35,6 @@ export class TimerInterceptor implements HttpInterceptor {
       ),
       finalize(() => {
         const timeElapsed = Date.now() - started;
-        console.log(typeof(timeElapsed));
         this.messageService.changeMessage(timeElapsed);
       })
     )
