@@ -1,15 +1,34 @@
-<div *ngIf="data">
-  <p>questionnaire works! {{data.id}}</p>
-  <form>
+<div *ngIf="data" class='qf-container'>
+  <form [formGroup]="questionnaireForm" (ngSubmit)='submitForm()'>
+    <h1>Patient Questionnaire</h1>
     <div *ngFor="let question of data.item">
-      <label>{{question.text}}</label>
-      <div *ngIf="question.type === 'group'">
-        <div *ngFor='let item of question.item'>
-          <label>{{item.text}}</label>
-          <input [type]="item.type === 'boolean' ? 'checkbox' : 'question.type'" />
+      <div class="qf-single-radio-container" *ngIf="question.type === 'boolean'">
+        <label class="qf-label-text">{{question.text}}</label>
+        <div class="qf-radio-container">
+          <label class="radio-label">Yes</label>
+          <input class='radio' formControlName='{{question.linkId}}' type="radio" value="Yes" required/>
+          <label class="radio-label">No</label>
+          <input class=' radio' formControlName='{{question.linkId}}' type="radio" value="No" required/>
         </div>
       </div>
-      <input *ngIf="question.type !== 'group'" [type]="question.type === 'boolean' ? 'checkbox' : 'question.type'" />
+      <div *ngIf="question.type === 'group'" class="qf-question-section-container">
+          <p class="group-header-text">{{question.text}}</p>
+        <div formGroupName={{question.linkId}} class="qf-question-section">
+          <div *ngFor='let item of question.item' class='qf-nested-questions'>
+            <label class='qf-nested-labels'>{{item.text}}</label>
+            <div class="qf-radio-container" *ngIf="item.type === 'boolean'">
+              <label class="radio-label">Yes</label>
+              <input class='qf-nested-inputs radio' formControlName='{{item.linkId}}' name="{{item.linkId}}" type="radio" value="Yes" required />
+              <label class="radio-label" >No</label>
+              <input class='qf-nested-inputs radio' formControlName='{{item.linkId}}' name="{{item.linkId}}" type="radio" value="No" required />
+            </div>
+            <input *ngIf="item.type !== 'boolean'" class='qf-nested-inputs' formControlName='{{item.linkId}}' [type]="item.type" required />
+          </div>
+        </div>
+      </div>
     </div>
-  </form>    
+    <div class="qf-button-container"> 
+        <button [ngClass]="questionnaireForm.status === 'VALID' ? 'active' : 'disabled'" type="submit" [disabled]="questionnaireForm.status === 'INVALID'">Submit</button>
+    </div>
+  </form> 
 </div>

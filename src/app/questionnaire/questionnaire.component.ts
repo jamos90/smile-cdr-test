@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, Validators} from '@angular/forms';
 import * as questionaireData from '../../assets/questionnaire.json';
 
 
@@ -12,12 +12,44 @@ export class QuestionnaireComponent implements OnInit {
 
   questionnaireControl = new FormControl('');
 
-  constructor() { }
+  constructor( private fb: FormBuilder ) { }
 
   data: any = (questionaireData as any).default;
 
-  ngOnInit(): void {
-    console.log('questionaire data', questionaireData.date);
+  questionnaireResponse: object ;
+
+  questionnaireForm = this.fb.group({
+    '1': ['', Validators.required],
+    '2': this.fb.group({
+      '2.1': ['', Validators.required],
+      '2.2': ['', Validators.required],
+      '2.3': ['', Validators.required],
+      '2.4': ['', Validators.required],
+    }),
+    '3': this.fb.group({
+      '3.1': ['', Validators.required],
+      '3.2': ['', Validators.required]
+    })
+  })
+
+  updateForm() {
+    console.log('update from running');
   }
 
+  submitForm(): any {
+    this.questionnaireResponse = {
+      identifier: "test-questionnaire",
+      status: 'completed',
+      authored: Date.now(),
+      item: {
+        linkId: 1,
+        text: "Do you have allergies?",
+        answer: this.questionnaireForm.value['1']
+
+      },
+    }
+  }
+
+  ngOnInit(): void {
+  }
 }
