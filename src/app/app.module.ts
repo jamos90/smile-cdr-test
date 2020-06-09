@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common'
 
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api-service.service';
@@ -28,7 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule
   ],
   providers: [
     ApiService,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PatientTableComponent } from './patient-table/patient-table.component';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: 'table', component: PatientTableComponent},
@@ -11,7 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), CommonModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
