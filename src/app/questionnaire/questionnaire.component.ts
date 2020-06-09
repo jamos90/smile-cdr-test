@@ -16,7 +16,7 @@ export class QuestionnaireComponent implements OnInit {
 
   data: any = (questionaireData as any).default;
 
-  questionnaireResponse: object ;
+  questionnaireResponse;
 
   questionnaireForm = this.fb.group({
     '1': ['', Validators.required],
@@ -37,16 +37,61 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   submitForm(): any {
+    console.log(this.questionnaireForm);
+
     this.questionnaireResponse = {
       identifier: "test-questionnaire",
       status: 'completed',
       authored: Date.now(),
-      item: {
+      source: 'patient',
+      allergies: {
+        definition: 'allergies',
         linkId: 1,
         text: "Do you have allergies?",
         answer: this.questionnaireForm.value['1']
 
       },
+      generalQuestions: {
+        definition: 'General questions',
+        linkId: 2,
+        text: 'General questions',
+        gender: {
+          linkId: 2.1,
+          text: "What is your gender?",
+          answer: this.questionnaireForm.value['2']['2.1']
+        },
+        birthdate: {
+          linkId: 2.2,
+          text: 'What is your date of birth',
+          answer: this.questionnaireForm.value['2']['2.2']
+        },
+        countryOfBirth: {
+          linkId: 2.3,
+          text: 'What is your county of birth',
+          answer: this.questionnaireForm.value['2']['2.3']
+        },
+        maritalStatus: {
+          linkId: 2.4,
+          text: 'What is your marital status',
+          answer: this.questionnaireForm.value['2']['2.4']
+        }
+      },
+      intoxications: {
+        definition: 'Intoxications',
+        linkId: 3,
+        text: 'Intoxications',
+        smoking: {
+          linkId: 3.1,
+          text: 'Do you smoke',
+          answer: this.questionnaireForm.value['3']['3.1']
+        },
+        drinking: {
+          linkId: 3.2,
+          text: 'Do you drink',
+          answer: this.questionnaireForm.value['3']['3.2']
+        }
+      }
+         
     }
   }
 

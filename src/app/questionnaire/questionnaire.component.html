@@ -22,7 +22,7 @@
               <label class="radio-label" >No</label>
               <input class='qf-nested-inputs radio' formControlName='{{item.linkId}}' name="{{item.linkId}}" type="radio" value="No" required />
             </div>
-            <input *ngIf="item.type !== 'boolean'" class='qf-nested-inputs' formControlName='{{item.linkId}}' [type]="item.type" required />
+            <input *ngIf="item.type !== 'boolean'" minlength="1" (keydown.space)="$event.preventDefault();" class='qf-nested-inputs' formControlName='{{item.linkId}}' [type]="item.type" required />
           </div>
         </div>
       </div>
@@ -31,4 +31,32 @@
         <button [ngClass]="questionnaireForm.status === 'VALID' ? 'active' : 'disabled'" type="submit" [disabled]="questionnaireForm.status === 'INVALID'">Submit</button>
     </div>
   </form> 
+</div>
+<div class="qf-answer-container" *ngIf="questionnaireResponse">
+  <div>
+    <p>title:{{questionnaireResponse.identifier}}</p>
+    <p>status:{{questionnaireResponse.status}}</p>
+    <p>authored:{{questionnaireResponse.authored | date: 'yy-MM-dd hh:mm'}}</p>
+    <p>source:{{questionnaireResponse.source}}</p>
+    <p>Item:{{questionnaireResponse.allergies.definition}}</p>
+    <p>LinkId:{{questionnaireResponse.allergies.linkId}}</p>
+    <ul>
+      <li>text:{{questionnaireResponse.allergies.text}}</li>
+      <li>answer:{{questionnaireResponse.allergies.answer}}</li>
+    </ul>
+    <p>Item:{{questionnaireResponse.generalQuestions.definition}}</p>
+    <p>linkId:{{questionnaireResponse.generalQuestions.linkId}}</p>
+    <ul>
+        <li>{{questionnaireResponse.generalQuestions.gender.text}}:{{questionnaireResponse.generalQuestions.gender.answer}}</li>
+        <li>{{questionnaireResponse.generalQuestions.birthdate.text}}:{{questionnaireResponse.generalQuestions.birthdate.answer}}</li>
+        <li>{{questionnaireResponse.generalQuestions.countryOfBirth.text}}:{{questionnaireResponse.generalQuestions.countryOfBirth.answer}}</li>
+        <li>{{questionnaireResponse.generalQuestions.maritalStatus.text}}:{{questionnaireResponse.generalQuestions.maritalStatus.answer}}</li>
+    </ul>
+    <p>Item:{{questionnaireResponse.intoxications.definition}}</p>
+    <p>linkId:{{questionnaireResponse.intoxications.linkId}}</p>
+    <ul>
+        <li>{{questionnaireResponse.intoxications.smoking.text}}:{{questionnaireResponse.intoxications.smoking.answer}}
+        <li>{{questionnaireResponse.intoxications.drinking.text}}:{{questionnaireResponse.intoxications.drinking.answer}}
+    </ul>
+   </div>
 </div>
