@@ -9,7 +9,6 @@ export class ErrorTextService {
 
   setErrorText(text: any) {
     this.errorText = text;
-    console.log('error text', this.errorText)
   }
 
   clear() {
