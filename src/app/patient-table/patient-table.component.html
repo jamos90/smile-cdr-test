@@ -1,11 +1,11 @@
 <div class="pt-body-container">
-  <div class='pt-header-container'>
+  <div class="pt-header-container">
     <h3 class="pt-title-text">Patient data table</h3>
   </div>
   <div class="pt-search-container">
     <div class="pt-search-item">
         <label>Search for a patient by name:</label>
-        <input type="text" placeholder="search for a resource by name" type="text" [(ngModel)]='searchName'>
+        <input type="text" placeholder="search for a resource by name" type="text" [(ngModel)]="searchName">
     </div>
     <div class="pt-search-item">
         <label>Search for a patient by date of birth:</label>
@@ -40,8 +40,8 @@
         <td>{{data.resource.id ? data.resource.id : 'no id present'}}</td>
         <td>{{data.resource.birthDate | date: 'yyyy-MM-dd'}}</td>
         <td>{{data.resource.gender ? data.resource.gender : 'no gender listed'}}</td>
-        <td>{{data.resource.telecom ? data.resource.telecom[0].system : 'no contact device'}}</td>
-        <td>{{data.resource.telecom ? data.resource.telecom[0].use : 'no contact method'}}</td>
+        <td>{{data.resource.telecom ? data.resource.telecom[0].system : 'no contact device listed'}}</td>
+        <td>{{data.resource.telecom ? data.resource.telecom[0].use : 'no contact method listed'}}</td>
         <td>{{data.resource.address ? (data.resource.address[0].text ? data.resource.address[0].text : 'no address details') : 'no address listed'}} </td>
         <td>{{data.resource.address ? (data.resource.address[1] ? data.resource.address[1].text : 'no address details') : 'no address listed'}} </td>
       </tr>

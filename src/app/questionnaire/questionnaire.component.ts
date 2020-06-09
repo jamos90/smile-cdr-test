@@ -32,13 +32,7 @@ export class QuestionnaireComponent implements OnInit {
     })
   })
 
-  updateForm() {
-    console.log('update from running');
-  }
-
   submitForm(): any {
-    console.log(this.questionnaireForm);
-
     this.questionnaireResponse = {
       identifier: "test-questionnaire",
       status: 'completed',
